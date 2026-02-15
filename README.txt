@@ -1,1 +1,1 @@
-Google news
+The latest Google news! Use new articles from 9to5Google as triggers in your Flows

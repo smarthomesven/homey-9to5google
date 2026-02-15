@@ -16,8 +16,7 @@ module.exports = class NineToFiveGoogleApp extends Homey.App {
       const posts = data.rss.channel.item.map(item => ({
         author: item["dc:creator"],
         title: item.title,
-        url: item.link,
-        pubDate: item.pubDate
+        url: item.link
       }));
       return posts;
     } catch (error) {
@@ -46,8 +45,7 @@ module.exports = class NineToFiveGoogleApp extends Homey.App {
           this.homey.flow.getTriggerCard('new_post').trigger({
             title: latestPost.title,
             url: latestPost.url,
-            author: latestPost.author,
-            pubDate: latestPost.pubDate
+            author: latestPost.author
           });
         }
       } catch (error) {
