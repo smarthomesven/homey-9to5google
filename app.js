@@ -1,6 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
+const HomeyPush = require('./lib/push');
 const axios = require('axios');
 const { parseStringPromise } = require('xml2js');
 
@@ -28,6 +29,8 @@ module.exports = class NineToFiveGoogleApp extends Homey.App {
    */
   async onInit() {
     this.log('9to5Google has been initialized');
+    this.push = new HomeyPush(this);
+    await this.push.startPush();
     this.homey.settings.set('isFirstRun', true);
     this.homey.setInterval(async () => {
       try {
@@ -52,6 +55,10 @@ module.exports = class NineToFiveGoogleApp extends Homey.App {
         this.error('Error fetching 9to5Google feed:', error);
       }
     } , 15 * 60 * 1000);
+  }
+
+  async onUninit() {
+    this.push.stopPush();
   }
 
 };
